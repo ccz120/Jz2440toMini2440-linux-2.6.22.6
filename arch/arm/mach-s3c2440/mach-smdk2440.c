@@ -168,6 +168,75 @@ static struct s3c2410fb_mach_info smdk2440_lcd_cfg_1024x768 __initdata = {
 	},
 };
 
+#if defined(CONFIG_FB_S3C2410_TD240320)
+#define LCD_WIDTH 240
+#define LCD_HEIGHT 320
+#define LCD_PIXCLOCK 170000
+
+#define LCD_RIGHT_MARGIN 100
+#define LCD_LEFT_MARGIN 0
+#define LCD_HSYNC_LEN 4
+
+#define LCD_UPPER_MARGIN 0
+#define LCD_LOWER_MARGIN 1
+#define LCD_VSYNC_LEN 9
+
+#define LCD_CON5 (S3C2410_LCDCON5_FRM565 | S3C2410_LCDCON5_INVVCLK | S3C2410_LCDCON5_INVVFRAME | S3C2410_LCDCON5_INVVLINE | S3C2410_LCDCON5_HWSWP ) 
+#endif
+
+/* 240x320 */
+static struct s3c2410fb_mach_info mini2440_lcd_cfg_td35 __initdata = {
+    .regs   = {
+        .lcdcon1 =  S3C2410_LCDCON1_TFT16BPP | \
+                S3C2410_LCDCON1_TFT | \
+				  S3C2410_LCDCON1_CLKVAL(0x04),
+
+        .lcdcon2 =  S3C2410_LCDCON2_VBPD(5) | \
+                S3C2410_LCDCON2_LINEVAL(319) | \
+                S3C2410_LCDCON2_VFPD(3) | \
+                S3C2410_LCDCON2_VSPW(1),
+
+        .lcdcon3 =  S3C2410_LCDCON3_HBPD(10) | \
+                S3C2410_LCDCON3_HOZVAL(239) | \
+                S3C2410_LCDCON3_HFPD(1),
+
+        .lcdcon4 =  S3C2410_LCDCON4_MVAL(13) | \
+                S3C2410_LCDCON4_HSPW(0),
+
+		.lcdcon5	= LCD_CON5,
+	},
+
+    .gpccon      =  0xaaaa56aa,
+	.gpccon_mask	= 0xffffffff,
+    .gpcup       =  0xffffffff,
+	.gpcup_mask	= 0xffffffff,
+
+    .gpdcon      =  0xaaaaaaaa,
+	.gpdcon_mask	= 0xffffffff,
+    .gpdup       =  0xffffffff,
+	.gpdup_mask	= 0xffffffff,
+
+    .fixed_syncs =  1,
+    .type        =  S3C2410_LCDCON1_TFT, 
+	.width		= 0,
+	.height		= 0,
+
+	.xres		= LCD_WIDTH,
+	.yres		= LCD_HEIGHT,
+
+    .bpp    	= 16,
+/*
+	.pixclock	= LCD_PIXCLOCK,
+
+	.left_margin	= LCD_LEFT_MARGIN + 1,
+	.right_margin	= LCD_RIGHT_MARGIN + 1,
+	.hsync_len	= LCD_HSYNC_LEN + 1,
+	.upper_margin	= LCD_UPPER_MARGIN + 1,
+	.lower_margin	= LCD_LOWER_MARGIN + 1,
+	.vsync_len	= LCD_VSYNC_LEN + 1,
+*/	
+};
+
 /* 240x320 */
 static struct s3c2410fb_mach_info smdk2440_lcd_cfg_240x320 __initdata = {
     .regs   = {
@@ -390,11 +459,16 @@ static void __init smdk2440_map_io(void)
 
 static void __init smdk2440_machine_init(void)
 {
+#ifdef CONFIG_SMDK2440_CPU2440 
 	s3c24xx_fb_set_platdata(&smdk2440_lcd_cfg);
+#else	
+	s3c24xx_fb_set_platdata(&smdk2440_lcd_cfg_240x320);
+#endif	
 
 	platform_add_devices(smdk2440_devices, ARRAY_SIZE(smdk2440_devices));
 	smdk_machine_init();
 }
+
 
 MACHINE_START(S3C2440, "SMDK2440")
 	/* Maintainer: Ben Dooks <ben@fluff.org> */
