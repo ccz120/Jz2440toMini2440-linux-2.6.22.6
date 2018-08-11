@@ -6,6 +6,7 @@
 *.ko
 *.obj
 *.elf
+.gitignore
 
 # Linker output
 *.ilk
