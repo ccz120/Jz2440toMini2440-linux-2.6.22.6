@@ -716,12 +716,14 @@ static int s3c2410fb_init_registers(struct s3c2410fb_info *fbi)
 	s3c2410_gpio_setpin(S3C2410_GPH6, 1); 
 	s3c2410_gpio_setpin(S3C2410_GPB1, 1);
 #else
+#ifdef CONFIG_SMDK2440_CPU2440 
 	/* thisway.diy@163.com modify again, for eBlocks */
 	s3c2410_gpio_cfgpin(S3C2410_GPB0, S3C2410_GPB0_OUTP); // back light control
 
 	s3c2410_gpio_pullup(S3C2410_GPB0, 0); 
 
 	s3c2410_gpio_setpin(S3C2410_GPB0, 1);	// back light control, enable
+#endif
 #endif
 	
 	/* probably not required */
@@ -731,8 +733,10 @@ static int s3c2410fb_init_registers(struct s3c2410fb_info *fbi)
 	fbi->regs.lcdcon1 |= S3C2410_LCDCON1_ENVID;
 	writel(fbi->regs.lcdcon1, S3C2410_LCDCON1);
 
+#ifdef CONFIG_SMDK2440_CPU2440 
 	// add by thisway.diy@163.com, for eBlocks
 	s3c2410_gpio_setpin(S3C2410_GPB0, 1);	// back light control
+#endif	
 
 	return 0;
 }
