@@ -41,13 +41,13 @@
 #include <asm/io.h>
 #include <asm/irq.h>
 #include <asm/uaccess.h>
-#include <asm/plat-s3c24xx/regs-timer.h>
+#include <asm/arch-s3c2410/regs-timer.h>
 	 
 #include <asm/plat-s3c24xx/gpio-cfg.h>
-#include <mach/regs-clock.h>
-#include <mach/regs-gpio.h>
+#include <asm/arch-s3c2410/regs-clock.h>
+#include <asm/arch-s3c2410/regs-gpio.h>
 
-#include <mach/gpio.h>
+#include <asm/arch-s3c2410/gpio.h>
 
 #include <linux/cdev.h>
 
@@ -62,8 +62,8 @@
 #include <asm/mach-types.h>
 
 #include <asm/irq.h>
-#include <mach/map.h>
-#include <mach/regs-irq.h>
+#include <asm/arch-s3c2410/map.h>
+#include <asm/arch-s3c2410/regs-irq.h>
 #include <asm/mach/time.h>
 
 #include <asm/plat-s3c24xx/clock.h>
@@ -228,27 +228,27 @@ static inline void notify_info_data(unsigned char _lcd_type, unsigned char ver_y
 //
 static inline void set_pin_up(void)
 {
-	s3c2410_gpio_pullup(S3C2410_GPB(1), 0);
+	s3c2410_gpio_pullup(S3C2410_GPB1, 0);
 }
 
 static inline void set_pin_as_input(void)
 {
-	s3c2410_gpio_cfgpin(S3C2410_GPB(1), S3C2410_GPIO_INPUT);
+	s3c2410_gpio_cfgpin(S3C2410_GPB1, S3C2410_GPIO_INPUT);
 }
 
 static inline void set_pin_as_output(void)
 {
-	s3c2410_gpio_cfgpin(S3C2410_GPB(1), S3C2410_GPIO_OUTPUT);
+	s3c2410_gpio_cfgpin(S3C2410_GPB1, S3C2410_GPIO_OUTPUT);
 }
 
 static inline void set_pin_value(int v)
 {
-	s3c2410_gpio_setpin(S3C2410_GPB(1), !!v);
+	s3c2410_gpio_setpin(S3C2410_GPB1, !!v);
 }
 
 static inline int get_pin_value(void)
 {
-	int v = !!s3c2410_gpio_getpin(S3C2410_GPB(1));
+	int v = !!s3c2410_gpio_getpin(S3C2410_GPB1);
 	return v;
 }
 
