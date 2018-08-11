@@ -16,6 +16,17 @@ config TOUCHSCREEN_S3C2410
 	help
           S3C2410/S3C2440 touchscreens
 
+config TOUCHSCREEN_1WIRE
+	tristate "Mini2440 1-Wire host and Touch Screen Driver"
+	help
+	  Say Y here to enable the 1-Wire host and Touch Screen driver for
+	  FriendlyARM Mini2440 development board.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called mini2440_1wire_host.
+
 config TOUCHSCREEN_ADS7846
 	tristate "ADS7846/TSC2046 and ADS7843 based touchscreens"
 	depends on SPI_MASTER
